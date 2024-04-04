@@ -14,7 +14,7 @@ use tower::ServiceExt; // for `oneshot`
 #[tokio::test]
 async fn health_check_works() {
     // Arrange
-    let app = zero2prod::app();
+    let app = zero2prod::startup::app();
     // Act
     let response = app
         .oneshot(
@@ -34,7 +34,7 @@ async fn health_check_works() {
 #[tokio::test]
 async fn subscribe_returns_a_200_for_valid_form_data() {
     // Arrange
-    let app = zero2prod::app();
+    let app = zero2prod::startup::app();
     // Act
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
     let response = app
@@ -65,7 +65,7 @@ async fn subscribe_returns_a_422_when_data_is_missing() {
     ];
     // Act
     for (invalid_body, error_message) in test_cases {
-        let app = zero2prod::app();
+        let app = zero2prod::startup::app();
         let response = app
             .oneshot(
                 Request::builder()
